@@ -26,12 +26,29 @@ def upload_file():
 		b = BytesIO(a)
 		im = Image.open(b)
 		arr = np.array(im.getdata(), np.uint8).reshape(im.size[1], im.size[0], 3)
-
-		#to_send = pickle.dumps(arr)
-		#send the numpy array through ftp?
-		#session = FTP('server.address.com','USERNAME','PASSWORD')
-		#session.storbinary('STOR ', to_send)     # send the file
-		#session.quit()
+		send_data = pickle.dumps(arr)
+		#create socket, bind, begin the sending process
+		sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+		sock.bind((socket.gethostname(),8000))
+		sock.settimeout(2)
+		i = 0
+		print("Receiving...")
+		while(i < 3):
+			try:
+				sock.sendto(send_data,('localhost',8000))  #self.ip = 'localhost'
+				data,addr = sock.recvfrom(4096)
+				break
+			except Exception as e:
+				print("Retrying...")
+				i += 1
+				print("Message was not received in these 2 seconds...")
+				if(i == 3):
+					#Error, since we have reached the max tries for retrying
+					print("ERROR: MESSAGE WAS NOT RECEIVED")
+					return
+		print("Server replied:")
+		print(data)
+		sock.close()
 		return render_template("result.html")
 
 if __name__ == "__main__":
