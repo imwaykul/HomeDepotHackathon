@@ -12,6 +12,8 @@
 	 <title>Face Yourself</title>
 
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
+	 <script src="static/js/webcam.js"></script>
+	 <script src="static/js/record.js"></script>
 
 </head>
 	<body class="mainBody">
@@ -23,21 +25,17 @@
 	<div>
 		<span>
 			<img class="mainImage" id="mainPicture" src="/static/pictures/tsundere.jpg" alt="Face to Compare">
-			<img class="myImage" id="myPicture" src="/static/pictures/empty.jpg" alt="Face to Compare">
+			<button class="refresh" id="refreshButton">New Comparison!</button>
+			<button class="stop" id="stopButton" value="Stop">Take a Picture!</button>
+			<button class="stop" id="redoButton" value="Stop">Redo!</button>
+			<form method="POST" enctype="multipart/form-data" id="myForm">
+				<span>
+					<div class="muhPicture" id="myPicture"></div>
+				</span>
+			</form>
+
+				<button class="upload" id="uploadButton" value="Upload">Submit!</button>
 		</span>
-		<div>
-			<span>
-				<button class="refresh" id="refreshButton">New Picture!</button>
-			    <form action = "/upload" method = "POST" 
-			         enctype = "multipart/form-data">
-			        <input type="file" name="file" class="upload" id="uploadButton"></input>
-			        <input type="submit" name="" value="Confirm Upload!">
-			    </form>
-			</span>
-		</div>
-		<div>
-			<button class="start">Start Analysis!</button>
-		</div>
 	</div>
 </body>
 </html>

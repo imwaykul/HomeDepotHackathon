@@ -16,17 +16,23 @@ p {
     color: red;
 }
 
+p.messy {
+  margin-bottom: 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-left: 310px;
+}
+
 img {
     display: inline;
-    margin-left: auto;
+    margin-left: 45px;
     margin-right: auto;
-    width: 49%;
     height: 350px;
 }
 
 button.refresh {
     display: inline;
-    margin-left: auto;
+    margin-left: 555px;
     margin-right: auto;
     width: 49%;
     border-radius: 8px;
@@ -40,6 +46,15 @@ button.upload {
     width: 49%;
     border-radius: 8px;
     background-color: #4CAF50;
+}
+
+button.stop {
+    display: inline;
+    margin-left: 555px;
+    margin-right: auto;
+    width: 49%;
+    border-radius: 8px;
+    background-color: #F9F9F9;
 }
 
 form {
