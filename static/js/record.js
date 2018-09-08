@@ -37,7 +37,7 @@ $(document).ready(function() {
 
     function upload() {
         var formData = $('#res')[0].src;
-        var sendData = {'data' : formData}
+        var sendData = {'data' : formData};
         //send form data via AJAX
         
         $.ajax({

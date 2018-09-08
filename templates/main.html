@@ -28,12 +28,16 @@
 			<button class="refresh" id="refreshButton">New Comparison!</button>
 			<button class="stop" id="stopButton" value="Stop">Take a Picture!</button>
 			<button class="stop" id="redoButton" value="Stop">Redo!</button>
+			<form id="uploadForm" action = "/upload" method = "POST" 
+			         enctype = "multipart/form-data">
+			    <input type="file" name="file" class="upload" id="uploadButton"></input>
+			    <input type="submit" name="" value="Confirm Upload!">
+			</form>
 			<form method="POST" enctype="multipart/form-data" id="myForm">
 				<span>
 					<div class="muhPicture" id="myPicture"></div>
 				</span>
 			</form>
-
 				<button class="upload" id="uploadButton" value="Upload">Submit!</button>
 		</span>
 	</div>
