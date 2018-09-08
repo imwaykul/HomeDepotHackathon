@@ -1,0 +1,53 @@
+body.mainBody {
+    background-color: powderblue;
+}
+
+h1.mTitle {
+    display: block;
+    margin-left: 500px;
+    margin-right: 200px;
+    width: 100%;
+    color: black;
+    font-family: 'Brush Script MT', cursive, sans-serif;
+    font-size: 70px;
+}
+
+p {
+    color: red;
+}
+
+img {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 49%;
+    height: 350px;
+}
+
+button.refresh {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 49%;
+    border-radius: 8px;
+    background-color: #FF69B4;
+}
+
+button.upload {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 49%;
+    border-radius: 8px;
+    background-color: #4CAF50;
+}
+
+button.start {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    margin-left: 450px;
+    margin-top: 20px;
+    background-color: #FF00FF;
+}
