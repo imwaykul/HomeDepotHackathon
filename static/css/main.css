@@ -42,6 +42,13 @@ button.upload {
     background-color: #4CAF50;
 }
 
+form {
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 49%;
+}
+
 button.start {
     display: inline;
     margin-left: auto;
