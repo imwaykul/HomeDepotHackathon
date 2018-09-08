@@ -5,10 +5,12 @@ Problem Description: Attempt to give a score on how similar two faces are.
 
 
 
-Data Source: http://vis-www.cs.umass.edu/fddb/
+Data Source: https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/
 
 Citation:
 
-Vidit Jain and Erik Learned-Miller.
-FDDB: A Benchmark for Face Detection in Unconstrained Settings.
-Technical Report UM-CS-2010-009, Dept. of Computer Science, University of Massachusetts, Amherst. 2010. 
+- C. Sagonas, E. Antonakos, G, Tzimiropoulos, S. Zafeiriou, M. Pantic. 300 faces In-the-wild challenge: Database and results. Image and Vision Computing (IMAVIS), Special Issue on Facial Landmark Localisation "In-The-Wild". 2016.
+
+- C. Sagonas, G. Tzimiropoulos, S. Zafeiriou, M. Pantic. A semi-automatic methodology for facial landmark annotation. Proceedings of IEEE Int’l Conf. Computer Vision and Pattern Recognition (CVPR-W), 5th Workshop on Analysis and Modeling of Faces and Gestures (AMFG 2013). Oregon, USA, June 2013.
+
+- C. Sagonas, G. Tzimiropoulos, S. Zafeiriou, M. Pantic. 300 Faces in-the-Wild Challenge: The first facial landmark localization Challenge. Proceedings of IEEE Int’l Conf. on Computer Vision (ICCV-W), 300 Faces in-the-Wild Challenge (300-W). Sydney, Australia, December 2013.
