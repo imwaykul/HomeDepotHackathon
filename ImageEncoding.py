@@ -76,9 +76,9 @@ for img in range(1, 872):
                     x = int(float(coord[0]) * pic_length_ratio)
                     y = int(float(coord[1]) * pic_width_ratio)
                     indiv_img_array.append((x,y))
-                    cv2.circle(img_smaller,(x,y), 3, (0,255,0), -1)
-                    cv2.imshow("face1Small",img_smaller)
-                    cv2.waitKey(100)
+                    #cv2.circle(img_smaller,(x,y), 3, (0,255,0), -1)
+                    #cv2.imshow("face1Small",img_smaller)
+                    #cv2.waitKey(100)
                 ctr = ctr + 1
                 newstr = "RESCALED" + full_img_str
             image_array.append(indiv_img_array)
@@ -86,6 +86,40 @@ for img in range(1, 872):
             pass
 #print(len(image_array))
 
+def convert2CSV(photos):
+    photo_count = 1
+    region = "NULL"
+    face_reg_file = open("face_recognition_training.csv", "w")
+    csv_writer = csv.writer(face_reg_file)
+    csv_writer.writerow(["PhotoID", "Region", "X", "Y"])
+    for photo in photos:
+        point_count = 1
+        for point in photo:
+            if (1 <= point_count <= 17):
+                region = "JAWLINE"
+            elif (18 <= point_count <= 22):
+                region = "LEFT_EYE_BROW"
+            elif (23 <= point_count <= 27):
+                region = "RIGHT_EYE_BROW"
+            elif (28 <= point_count <= 36):
+                region = "NOSE"
+            elif (37 <= point_count <= 42):
+                region = "LEFT_EYE"
+            elif (43 <= point_count <= 48):
+                region = "RIGHT_EYE"
+            else:
+                region = "MOUTH"
+            csv_writer.writerow([str(photo_count), region, str(point[0]), str(point[1])])
+            point_count = point_count + 1
+        photo_count = photo_count + 1
+    face_reg_file.close()
+            
+         
+        
+         
+
+convert2CSV(image_array)
+            
             
 
 
