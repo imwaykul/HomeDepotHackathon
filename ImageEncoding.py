@@ -4,63 +4,143 @@
 ##File to encode images into 2d arrays
 
 import tensorflow
-import numpy
+import numpy as np
 from scipy import ndimage
 from scipy import misc
 from PIL import Image
 import glob
 import os
+import csv
+import cv2
+import math
 
-#os.chdir("originalPics/2002/07/19/big")
+os.chdir("ProjectData/lfpw/trainset/")
+image_array = []
+smallestRes = 10000000
+imgId = 0
+length = 0
+width = 0
+for img in range(1, 872):
+    full_img_str = "img."
+    if (img < 10):
+        full_img_str = "image_000" + str(img)+ ".png"
+    elif (img < 100):
+        full_img_str = "image_00" + str(img) + ".png"
+    else:
+        full_img_str = "image_0" + str(img) + ".png"
+    try:
+        im = Image.open(full_img_str)
+        cur_res = im.size[0]*im.size[1]
+        if (cur_res < smallestRes):
+            smallestRes = cur_res
+            length = im.size[0]
+            width = im.size[1]
+            imgId = img
+    except:
+        pass
 
-years = [2002, 2003]
+print("SMALLEST RES: ", smallestRes)
+print("LENGTH: ", length)
+print("WIDTH: ", width)
+print("IMG ID: ", imgId)
+length = 224
+width = 224
 
-month = [(7, 12), (1,9)]
+for img in range(1, 872):
+    indiv_img_array = []
+    full_img_str = "."
+    img_info = "."
+    if (img == imgId):
+        pass
+    else:
+        if (img < 10):
+            full_img_str = "image_000" + str(img)+ ".png"
+            img_info = "image_000" + str(img)+ ".pts"
+        elif (img < 100):
+            full_img_str = "image_00" + str(img) + ".png"
+            img_info = "image_00" + str(img)+ ".pts"
+        else:
+            full_img_str = "image_0" + str(img) + ".png"
+            img_info = "image_0" + str(img)+ ".pts"
+        try:
+            im = Image.open(full_img_str)
+            cv_img = cv2.imread(full_img_str)
+            pic_length_ratio= length/im.size[0]
+            pic_width_ratio = width/im.size[1]
+            img_smaller = cv2.resize(cv_img,(0,0),fx=pic_length_ratio,fy=pic_width_ratio)
+            open_pts_file = open(img_info)
+            ctr = 0
+            for line in open_pts_file.readlines():
+                if (ctr > 2 and ctr < 71):
+                    coord = line.strip().split(" ")
+                    x = int(float(coord[0]) * pic_length_ratio)
+                    y = int(float(coord[1]) * pic_width_ratio)
+                    indiv_img_array.append((x,y))
+                    #cv2.circle(img_smaller,(x,y), 3, (0,255,0), -1)
+                    #cv2.imshow("face1Small",img_smaller)
+                    #cv2.waitKey(100)
+                ctr = ctr + 1
+                newstr = "RESCALED" + full_img_str
+            image_array.append(indiv_img_array)
+        except:
+            pass
+#print(len(image_array))
 
-face = misc.face()
-misc.imsave("img_18.jpg", face)
+def convert2CSV(photos):
+    photo_count = 1
+    region = "NULL"
+    face_reg_file = open("face_recognition_training.csv", "w")
+    csv_writer = csv.writer(face_reg_file)
+    csv_writer.writerow(["PhotoID", "Region", "X", "Y"])
+    for photo in photos:
+        point_count = 1
+        for point in photo:
+            if (1 <= point_count <= 17):
+                region = "JAWLINE"
+            elif (18 <= point_count <= 22):
+                region = "LEFT_EYE_BROW"
+            elif (23 <= point_count <= 27):
+                region = "RIGHT_EYE_BROW"
+            elif (28 <= point_count <= 36):
+                region = "NOSE"
+            elif (37 <= point_count <= 42):
+                region = "LEFT_EYE"
+            elif (43 <= point_count <= 48):
+                region = "RIGHT_EYE"
+            else:
+                region = "MOUTH"
+            csv_writer.writerow([str(photo_count), region, str(point[0]), str(point[1])])
+            point_count = point_count + 1
+        photo_count = photo_count + 1
+    face_reg_file.close()
+            
+         
+        
+         
 
-valid_images = [".jpg",".gif",".png",".tga"]
-imageArray = []
-
-days_per_month = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
-
-#print(days_per_month)
-
-#for month in days_per_month:
-    #print(days_per_month[month])
-
-#GENERALIZE
+convert2CSV(image_array)
+            
+            
 
 
-day = 1
-start = 1
-
-for year in years:
-    i = year - 2002
-    start = 1
-    for m in range(month[i][0], month[i][1]+1):
-        month_str = str(m)
-        end = days_per_month[m]+1
-        if (len(month_str) == 1):
-            month_str = "0" + month_str
-        if (i == 0 and m == 7):
-            start = 19
-        if (i == 1 and m == 9):
-            end = 3
-        for d in range(start, end):
-            day_str = str(d)
-            if (len(day_str) == 1):
-                day_str = "0" + day_str
-            currPath = "originalPics/" + str(year) + "/" + month_str + "/" + day_str + "/big/*.jpg"
-            for filename in glob.glob(currPath):
-                current_img = Image.open(filename)
-                imageArray.append(current_img)
-                current_img.close()
-        start = 1
-
-print(len(imageArray))
-#for filename in glob.glob("originalPics/2002/07/19/big/*.jpg"):
-    #current_img = Image.open(filename)
-    #imageArray.append(current_img)
+##img = cv2.imread('image_0001.png')
+##
+##scale = 1.5
+##
+##imgSmaller = cv2.resize(img,(0,0),fx=scale,fy=scale)
+##cv2.circle(imgSmaller,(int(115*scale),int(229*scale)), 3, (0,255,0), -1)
+##cv2.circle(imgSmaller,(int(116*scale),int(245*scale)), 3, (0,255,0), -1)
+##cv2.circle(imgSmaller,(int(120*scale),int(270*scale)), 3, (0,255,0), -1)
+##cv2.imshow("face1Small",imgSmaller)
+##
+##
+##cv2.circle(img,(115,229), 3, (255,0,0), -1)
+##cv2.circle(img,(116,245), 3, (255,0,0), -1)
+##cv2.circle(img,(120,270), 3, (255,0,0), -1)
+##
+##cv2.imshow("face1",img)
+##
+##print (img.shape)
+##print (imgSmaller.shape)
+##cv2.waitKey(0)
 
