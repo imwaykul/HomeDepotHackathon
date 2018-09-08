@@ -17,7 +17,6 @@ def upload_file():
 		f = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
 		# add your custom code to check that the uploaded file is a valid image and not a malicious file (out-of-scope for this post)
 		file.save(f)
-		print(f)
 		return render_template("uploaded.html", user_image=f)
 
 if __name__ == "__main__":
